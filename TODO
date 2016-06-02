@@ -1,0 +1,18 @@
+- flow entries in ALLOCATED state but never associated to a file descriptor
+  with a bind operation should disappear after a while, otherwise we
+  have leakage
+
+- rlite-utils: deserialization routines should check lengths
+
+- if we lose initial PDU containing the DRF, it's a mess, even in presence
+  of retransmissions. From an EFCP point of view, in facto, how do I manage
+  subsequent packets (that come before the transmitter realizes it needs
+  to retransmit the first PDU with the DRF set)? It would be silly dropping
+  all these packets. To solve this problem, it could be convenient to
+  introduce in the DTP a state flag "waitingForDRF", that forces the DRF
+  when this is present but it shouldn't
+
+- CDAP: support a simple retransmission mechanism, in case the CDAP
+  connection is not supported by a reliable flow
+
+- support RIB M_READ (and M_WRITE)
